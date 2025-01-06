@@ -1,0 +1,68 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MAX 3
+int items[MAX];
+int front = -1, rear = -1; // Initial empty state
+// Queue operations
+void insert(int value);
+void delete();
+// Supporting function for queue visualization
+void display();
+int main()
+{
+int ch;
+int callid;
+while(1)
+{
+printf("\nEnter appropriate choice\n1.add call\n2.remove call\n3.display call
+list\n4.exit\n");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1:
+printf("Enter caller id to add\n");
+scanf("%d",&callid);
+insert(callid);
+break;
+case 2: delete();
+break;
+case 3: display();
+break;
+
+case 4: exit(0);
+default : printf("invalid choice\n");
+}
+}
+}
+void insert(int value){
+if(rear == MAX-1)
+printf("\nQUEUE OVERFLOW");
+else {
+if(front == -1)
+front = 0; // Going to insert first
+rear = rear+1;
+items[rear] = value;
+printf("\nCallerId added -> %d", value);
+}
+}
+void delete(){
+if(front == -1)
+printf("\nCALL QUEUE UNDERFLOW!!");
+else{
+printf("\nCallerId Deleted : %d", items[front]);
+front++;
+// Reset queue if last element deleted
+if(front > rear)
+front = rear = -1;
+}
+}
+void display(){
+if(rear == -1)
+printf("\nCall Queue is Empty!!!");
+else{
+int i;
+printf("\nCalls held in queue are:\n");
+for(i=front; i<=rear; i++)
+printf("%d ",items[i]);
+}
+}
