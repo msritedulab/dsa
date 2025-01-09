@@ -1,0 +1,116 @@
+Solution 2 :Circular Queue of student records
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX_SIZE 3
+typedef struct QueItem
+{
+char name[20];
+int usn;
+float cgpa;
+}QueItem;
+// Array of structures
+struct QueItem queue[MAX_SIZE];
+int front = -1, rear = -1;
+void insert(QueItem item);
+int delete();
+void display();
+int main()
+{
+int choice, value;
+while (1)
+{
+printf("1. Insert element in the queue\n");
+printf("2. Delete element from the queue\n");
+printf("3. Display elements in the queue\n");
+printf("4. Quit\n");
+printf("Enter your choice: ");
+scanf("%d", &choice);
+switch (choice)
+{
+case 1:
+{
+QueItem newItem;
+printf("Enter name:");
+scanf("%s", newItem.name);
+printf("Enter usn:");
+scanf("%d", &newItem.usn);
+printf("Enter cgpa:");
+scanf("%f", &newItem.cgpa);
+insert(newItem);
+break;
+}
+case 2:
+{
+QueItem item;
+value = delete(&item); //call-by-ref
+if (value != -1)
+{
+printf("The deleted element is: %s\n", item.name);
+}
+break;
+}
+case 3:
+display();
+break;
+case 4:
+exit(0);
+default:
+printf("Invalid choice\n");
+}
+}
+return 0;
+}
+void insert(QueItem value)
+{
+if ((front == 0 && rear == MAX_SIZE - 1) \
+|| (rear + 1 == front))
+{
+printf("Circular Queue is full\n");
+return;
+}
+if (front == -1)
+{
+front = rear = 0;
+}
+else
+{
+rear = (rear+1)%MAX_SIZE;
+}
+queue[rear]= value;
+}
+// Function to remove an element from the queue
+int delete(QueItem *rItem)
+{
+QueItem value;
+if (front == -1) // queue is empty
+{
+printf("QUEUE UNDERFLOW\n");
+return -1;
+}
+*rItem = queue[front];
+if (front == rear) // only one element in the queue
+{
+front = rear = -1;
+}
+else
+{
+front = (front+1)%MAX_SIZE;
+}
+return 0;
+}
+void display()
+{
+int i;
+if(front == -1) printf(" \n Empty Queue\n");
+else
+{
+printf("\nFront -> %d\n",front);
+for( i = front; i!=rear; i=(i+1)%MAX_SIZE) {
+printf("Item:%s %d %.2f\n",queue[i].name,queue[i].usn,\
+queue[i].usn);
+}
+printf("Item:%s %d %.2f",queue[i].name,queue[i].usn,\
+queue[i].usn); // Print last element
+printf("\nRear -> %d \n",rear);
+}
+}
