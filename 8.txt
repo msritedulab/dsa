@@ -188,7 +188,7 @@ front = rear = 0;
 }
 else
 {
-rear = (rear+1)%MAX_SIZE
+rear = (rear+1)%MAX_SIZE;
 }
 queue[rear]= value;
 }
